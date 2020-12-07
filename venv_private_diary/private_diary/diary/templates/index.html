@@ -1,10 +1,81 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>トップページ</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
-</html>
+<!-- base.htmlに出力する -->
+{% extends 'base.html' %}
+<!-- staticファイルを読み込む -->
+{% load static %}
+<!-- titleを設定しbase.htmlに出力した際に反映させる -->
+{ % block title %}WEB上にあなた専用の日記ページを保存できるサービス | Private Diary{% endblock %}
+
+<!-- base.htmlのheader部分に出力する -->
+{ % block header %}
+
+<header class= "masthead text-center text-white">
+    <div class= "masthead-content">
+        <div class= "container">
+            <h1 class="masthead-heading mb-0">Private Diary</h1>
+            <h2 class="masthead-subheading mb-o">あなた専用の日記保存サービス</h2>
+            <a href="#" class="btn btn-primary btn-xl rounded-pill">LOG IN</a>
+        </div>
+    </div>
+
+    <div class="bg-circle-1 bg-circle"></div>
+    <div class="bg-circle-2 bg-circle"></div>
+    <div class="bg-circle-3 bg-circle"></div>
+    <div class="bg-circle-4 bg-circle"></div>
+</header>
+{% endblock %}
+
+{% block contents %}
+<section>
+    <div class="container">
+        <div class="row aligin-items-center">
+            <div class="col-lg-6 order-lg-2">
+                <div class="p-5">
+                    <img class="img-fluid rounded-circle" src="{% static 'img/01.jpg' %}" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6 order-lg-1">
+                <div class="p-5">
+                    <h2 class="display-4">Web Diary</h2>
+                    <p>Web上で作成/編集/削除ができる日記</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="p-5">
+                    <img class="img-fluid rounded-circle" src="{% static 'img/02.jpg' %}" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="p-5">
+                    <h2 class="display-4">Save Your Diary</h2>
+                    <p>あなたの日記をWebに保存に保存</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 order-lg-2">
+                <div class="p-5">
+                    <img class="img-fluid rounded-circle" src="{% static 'img/03.jpg' %}" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6 order-lg-1">
+                <div class="p-5">
+                    <h2 class="display-4">Membership System</h2>
+                    <p>会員制のWeb日記サービス</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
