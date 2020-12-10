@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
 
@@ -12,7 +12,7 @@
   <title>{% block title %}{% endblock %}</title>
 
   <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
   <!-- Custom fonts for this template -->
   <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
@@ -22,8 +22,8 @@
   <link href="{% static 'css/one-page-wonder.min.css' %}" rel="stylesheet">
 
   <!-- My style -->
-  <link rel="stylesheet" type = "text/css" href="{% static 'css/mystyle.css'}">
-  {% block head %}{ endblock }
+  <link rel="stylesheet" type = "text/css" href="{% static 'css/mystyle.css' %}">
+  {% block head %}{% endblock %}
 
 </head>
 
@@ -39,7 +39,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item {% block active_inquiry %}{% endblock %}"><a class="nav-link" href="#">INQUIRY</a></li>
+          <li class="nav-item {% block active_inquiry %}{% endblock %}"><a class="nav-link" href="{% url 'diary:inquiry' %}">INQUIRY</a></li>
         </ul>
 
         <ul class="navbar-nav ml-auto">
@@ -49,7 +49,22 @@
       </div>
     </div>
   </nav>
+  
   {% block header %}{% endblock %}
+  {% if messages %}
+  <div class="container">
+    <div class="row">
+      <div class="my-div-style w-100">
+        <ul class="messages" style="list-style: none;">
+          {% for message in messages %}
+          <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
   {% block contents %}{% endblock %}
 
 
@@ -63,7 +78,7 @@
 
   <!-- Bootstrap core JavaScript -->
   <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-  <script src="{static 'vender/bootstrap/js/bootstrap.bundle.min.js'}"></script>
+  <script src="{% static 'vender/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
   </div>
 </body>

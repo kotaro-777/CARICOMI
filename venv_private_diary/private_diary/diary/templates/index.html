@@ -3,11 +3,12 @@
 <!-- staticファイルを読み込む -->
 {% load static %}
 <!-- titleを設定しbase.htmlに出力した際に反映させる -->
-{ % block title %}WEB上にあなた専用の日記ページを保存できるサービス | Private Diary{% endblock %}
+{% block title %}
+WEB上にあなた専用の日記ページを保存できるサービス | Private Diary
+{% endblock %}
 
 <!-- base.htmlのheader部分に出力する -->
-{ % block header %}
-
+{% block header %}
 <header class= "masthead text-center text-white">
     <div class= "masthead-content">
         <div class= "container">
@@ -54,7 +55,7 @@
             <div class="col-lg-6">
                 <div class="p-5">
                     <h2 class="display-4">Save Your Diary</h2>
-                    <p>あなたの日記をWebに保存に保存</p>
+                    <p>あなたの日記をWebに保存</p>
                 </div>
             </div>
         </div>
