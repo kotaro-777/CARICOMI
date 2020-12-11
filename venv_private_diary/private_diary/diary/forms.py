@@ -1,7 +1,8 @@
 from django import forms
-#
-from django.core.mail import EmailMessage
 
+from django.core.mail import EmailMessage
+#models.pyからDiaryモデルクラスをインポート
+from .models import Diary
 
 #問い合わせ用フォーム
 class InquiryForm(forms.Form):
@@ -64,4 +65,15 @@ class InquiryForm(forms.Form):
         
         #send()メソッドを使用してメッセージを作成する
         message.send()
-        
+
+#日記作成フォーム
+class DiaryCreateForm(forms.ModelForm):
+    class Meta:
+        model = Diary
+        #user, created_at等は勝手に決まるためフォームで描かなくてOK
+        fields = ('title', 'content', 'photo1', 'photo2', 'photo3',)
+    #インスタンスを作成
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'

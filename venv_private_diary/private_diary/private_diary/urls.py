@@ -15,8 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+#staticファイルの読み込み
+from django.contrib.staticfiles.urls import static
+#設定ファイルを読み込む
+from . import settings_common, settings_dev
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('diary.urls')),
+    #all-authのurlsを指定することでDefaultでallauthが搭載しているurls.pyを参照する
+    path('accounts/', include('allauth.urls')),
 ]
+
+#開発サーバーでメディアを配信できるようにする設定
+urlpatterns += static(settings_common.MEDIA_URL,
+                      document_root = settings_dev.MEDIA_ROOT)

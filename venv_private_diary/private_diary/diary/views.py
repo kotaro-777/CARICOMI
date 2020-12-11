@@ -1,13 +1,20 @@
 #viewsのgeneric（汎用ビューが沢山あるモジュール）
 from django.views import generic
 #forms.pyから使用するフォームクラスをインポート
-from .forms import InquiryForm
+from .forms import InquiryForm, DiaryCreateForm
 #URLの逆引きを行えて、URLのハードコーディングを防げる
 from django.urls import reverse_lazy
 #送信が成功した際にメッセージを表示するメソッド
 from django.contrib import messages
-
+#loggingをインポート
 import logging
+#ログインしていないとアクセスできない状態にするもの
+from django.contrib.auth.mixins import LoginRequiredMixin
+#models.pyのDiaryモデルをインポート
+from .models import Diary
+
+from . import views
+
 #########################################################
 
 
@@ -32,3 +39,54 @@ class InquiryView(generic.FormView):
         messages.success(self.request, 'メッセージを送信しました。')
         logger.info(f"Inquiry sent by{form.cleaned_data['name']}")
         return super().form_valid(form)
+    
+    
+
+#日記一覧表示機能
+class DiaryListView(LoginRequiredMixin, generic.ListView):
+    model = Diary
+    template_name = 'diary_list.html'
+    paginate_by = 2
+    
+    #投稿された日記を作られた順に並べて表示するメソッド
+    def get_queryset(self):
+        diaries = Diary.objects.filter(user=self.request.user).order_by('-created_at')
+        #ページネイションを指定 クラスベースView使ったらヤバいほど簡単
+        return diaries
+    
+#日記の詳細表示
+class DiaryDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Diary
+    template_name = 'diary_detail.html'
+    
+#日記作成機能
+class DiaryCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Diary
+    template_name = 'diary_create.html'
+    form_class = DiaryCreateForm
+    #正常に処理が終わった時の遷移先
+    success_url = reverse_lazy('diary:diary_list')
+    
+    #フォームのバリデーションに以上がなかった時の処理
+    def form_valid(self, form):
+        #commit=falseを指定するとデータにまだ保存されていない状態のオブジェクトが返される
+        diary = form.save(commit=False)
+        #diaryのuserIdに自動生成されるuseIDを代入
+        diary.user = self.request.user
+        diary.save()
+        messages.success(self.request, '日記を作成しました。')
+        return super().form_valid(form)
+    
+    #フォームのバリデーションにエラーがなかった場合の処理
+    def form_invalid(self, form):
+        messages.error(self.request, '日記の作成に失敗しました。')
+        return super().form_invalid(form)
+
+
+#日記編集機能
+class DiaryUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Diary
+    template_name = 'diary_update.html'
+    form_class = DiaryCreateForm
+    
+    

@@ -158,9 +158,38 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 SITE_ID = 1
 
 #Djangoユーザーデーターベースをチェックし、組み込みの権限を照会する基本認証バックエンド
+#認証をテストするクラスを２つ設定
 AUTHENTICATION_BACKENDS = (
-    'allauth.accounts.auth_backends.AuthenticationBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
     #一般ユーザー用（メールアドレス認証）
     'django.contrib.auth.backends.ModelBackend',
-    
+    #管理サイト用（ユーザー名認証）
 )
+
+#メールアドレス認証に変更する設定
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_USERNAME_REQUIRED = 'False'
+
+#サインアップにメールアドレス確認をはさむように設定 => メールを登録後そのメアドにURLを送る認証を行う
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_REQUIRED = True
+
+#ログイン、ログアウト後の遷移先を設定
+LOGIN_REDIRECT_URL = 'diary:index'
+ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
+
+#ログアウトのクリック1発でログアウトする設定
+ACCOUNT＿LOGOUT＿ON_GET = True
+
+#django-allauthが送信するメールの件名に自動で付与される接頭辞をブランクする設定
+ACCOUNT_EMAIL_SUBJECT_PREFIX = ''
+
+#デフォルトのメール送信元を設定
+DEFAULT_FROM_EMAIL = 'kou.aaa36@icloud.com'
+
+##メディアファイル関係の設定
+#メディアファイルを配信するURL
+MEDIA_URL = '/media/'
+
+#ログイン直後にリダイレクトするurlを指定
+LOGIN_REDIRECT_URL = 'dairy:diary_list.html'
