@@ -193,3 +193,8 @@ MEDIA_URL = '/media/'
 
 #ログイン直後にリダイレクトするurlを指定
 LOGIN_REDIRECT_URL = 'dairy:diary_list.html'
+
+
+#バックアップバッチ用
+BACKUP_PATH = 'backup/'
+NUM_SAVED_BACKUP = 30

@@ -87,6 +87,31 @@ class DiaryCreateView(LoginRequiredMixin, generic.CreateView):
 class DiaryUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Diary
     template_name = 'diary_update.html'
+    #フォームフィールドはCreateフォームと変わらないため使いまわす
     form_class = DiaryCreateForm
     
     
+    def get_success_url(self):
+        """逆引きメソッド"""
+        return reverse_lazy('diary:diary_detail', kwargs={'pk':self.kwargs['pk']})
+    
+    def form_valid(self, form):
+        """正常にフォームが入力された時に実行されるメソッド"""
+        messages.success(self.request, '日記を更新しました。')
+        return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        """正常にフォームが入力されなかった時に実行されるメソッド"""
+        messages.success(self.request, '日記を更新できませんでした。')
+        return super().form_invalid(form)
+
+#日記削除機能
+class DiaryDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Diary
+    template_name = 'diary_delete.html'
+    #削除を正常に行えたら日記一覧ページへと遷移する
+    success_url = reverse_lazy('diary:diary_list')
+    
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, '日記を削除しました。')
+        return super().delete(request, *args, **kwargs)
