@@ -168,18 +168,21 @@ AUTHENTICATION_BACKENDS = (
 
 #メールアドレス認証に変更する設定
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_USERNAME_REQUIRED = 'False'
+ACCOUNT_USERNAME_REQUIRED = False
 
 #サインアップにメールアドレス確認をはさむように設定 => メールを登録後そのメアドにURLを送る認証を行う
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_EMAIL_REQUIRED = True
+
+#電子メール確認後にリダイレクトするURL
+#ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = 'diary:diary.html'
 
 #ログイン、ログアウト後の遷移先を設定
 LOGIN_REDIRECT_URL = 'diary:index'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
 
 #ログアウトのクリック1発でログアウトする設定
-ACCOUNT＿LOGOUT＿ON_GET = True
+ACCOUNT_LOGOUT_ON_GET = True
 
 #django-allauthが送信するメールの件名に自動で付与される接頭辞をブランクする設定
 ACCOUNT_EMAIL_SUBJECT_PREFIX = ''
@@ -191,8 +194,7 @@ DEFAULT_FROM_EMAIL = 'kou.aaa36@icloud.com'
 #メディアファイルを配信するURL
 MEDIA_URL = '/media/'
 
-#ログイン直後にリダイレクトするurlを指定
-LOGIN_REDIRECT_URL = 'dairy:diary_list.html'
+
 
 
 #バックアップバッチ用
