@@ -13,7 +13,7 @@
             {% if confirmation %}
                 <p>ユーザー登録を確定するには、以下のボタンを押してください。</p>
                 
-                <form action="{% url 'account_confirm_email' confirmation.key %}">
+                <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
                     {% csrf_token %}
                     <button class="btn btn-primary" type="submit">確定</button>
                 </form>
