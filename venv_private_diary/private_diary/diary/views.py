@@ -11,7 +11,8 @@ import logging
 #ログインしていないとアクセスできない状態にするもの
 from django.contrib.auth.mixins import LoginRequiredMixin
 #models.pyのDiaryモデルをインポート
-from .models import Diary
+from .models import Diary, CustomUser
+
 
 from . import views
 
@@ -53,11 +54,24 @@ class DiaryListView(LoginRequiredMixin, generic.ListView):
         diaries = Diary.objects.filter(user=self.request.user).order_by('-created_at')
         #ページネイションを指定 クラスベースView使ったらヤバいほど簡単
         return diaries
+
+#みんなの日記が見れる機能
+class PublicDiaryList(LoginRequiredMixin, generic.ListView):
+    model = Diary
+    template_name = 'public_diary_list.html'
+    pagenate_by = 2
     
+    
+    #投稿された日記を作られた順に並べて表示するメソッド(全員分)
+    def get_queryset(self):
+        diaries = Diary.objects.all().order_by('-created_at')
+        return diaries
+
 #日記の詳細表示
 class DiaryDetailView(LoginRequiredMixin, generic.DetailView):
     model = Diary
     template_name = 'diary_detail.html'
+    
     
 #日記作成機能
 class DiaryCreateView(LoginRequiredMixin, generic.CreateView):

@@ -40,9 +40,12 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item {% block active_inquiry %}{% endblock %}"><a class="nav-link" href="{% url 'diary:inquiry' %}">INQUIRY</a></li>
+          
           {% if user.is_authenticated %}
-            <li class="nav-item {% block active_diary_list %}{% endblock %}"><a class="nav-link" href="{% url 'diary:diary_list' %}">Diary List</a></li>
+          <li class="nav-item {% block active_public_diary_list %}{% endblock %}"><a class="nav-link" href="{% url 'diary:diary_public' %}">Public Diary</a></li>
+            <li class="nav-item {% block active_diary_list %}{% endblock %}"><a class="nav-link" href="{% url 'diary:diary_list' %}">Private Diary</a></li>
           {% endif %}
+          
         </ul>
 
         <ul class="navbar-nav ml-auto">
