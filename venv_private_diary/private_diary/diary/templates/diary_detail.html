@@ -14,33 +14,41 @@
                 <strong>タイトル</strong>
             </div>
             <div class="col-9">
-                {{ object.title }}
+                {{ object.company_name }}
             </div>
         </div>
         <hr>
-        <!--写真を表示-->
+        <!--面談日時-->
         <div class="row">
             <div class="col-3">
-                <strong>写真</strong>
+                <strong>面談日時</strong>
             </div>
-            <div class="col-3">
-                <!--写真の存在チェックをしないとなかった場合にエラーを返す-->
-                {% if object.photo1 %}
-                    <img src="{{ object.photo1.url }}" width="200" height="200" />
-                {% endif %}
-            </div>
-            <div class="col-3">
-                {% if object.photo2 %}
-                    <img src="{{ object.photo2.url }}" width="200" height="200" />
-                {% endif %}
-            </div>
-            <div class="col-3">
-                {% if object.photo3 %}
-                    <img src="{{ object.photo33.url }}" width="200" height="200" />
-                {% endif %}
+            <div class="col-9">
+                {{ object.interview_date }}
             </div>
         </div>
         <hr>
+        <!--選考段階-->
+        <div class="row">
+            <div class="col-3">
+                <strong>選考段階</strong>
+            </div>
+            <div class="col-9">
+                {{ object.selection_stage }}
+            </div>
+        </div>
+        <hr>
+        <!--本文-->
+        <div class="row">
+            <div class="col-3">
+                <strong>感想</strong>
+            </div>
+            <div class="col-9">
+                {{ object.content }}
+            </div>
+        </div>
+        <hr>
+
         <!--作成日時を表示-->
         <div class="row">
             <div class="col-3">

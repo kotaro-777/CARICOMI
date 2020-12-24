@@ -11,7 +11,7 @@ import logging
 #ログインしていないとアクセスできない状態にするもの
 from django.contrib.auth.mixins import LoginRequiredMixin
 #models.pyのDiaryモデルをインポート
-from .models import Diary, CustomUser
+from .models import CustomUser, CareerDiary, WordOfMouth
 
 
 from . import views
@@ -45,37 +45,37 @@ class InquiryView(generic.FormView):
 
 #日記一覧表示機能
 class DiaryListView(LoginRequiredMixin, generic.ListView):
-    model = Diary
+    model = CareerDiary
     template_name = 'diary_list.html'
     paginate_by = 2
     
     #投稿された日記を作られた順に並べて表示するメソッド
     def get_queryset(self):
-        diaries = Diary.objects.filter(user=self.request.user).order_by('-created_at')
+        diaries = CareerDiary.objects.filter(user=self.request.user).order_by('-created_at')
         #ページネイションを指定 クラスベースView使ったらヤバいほど簡単
         return diaries
 
 #みんなの日記が見れる機能
 class PublicDiaryList(LoginRequiredMixin, generic.ListView):
-    model = Diary
+    model = WordOfMouth
     template_name = 'public_diary_list.html'
     pagenate_by = 2
     
     
     #投稿された日記を作られた順に並べて表示するメソッド(全員分)
     def get_queryset(self):
-        diaries = Diary.objects.all().order_by('-created_at')
+        diaries = WordOfMouth.objects.all().order_by('-created_at')
         return diaries
 
 #日記の詳細表示
-class DiaryDetailView(LoginRequiredMixin, generic.DetailView):
-    model = Diary
+class CareerDiaryDetail(LoginRequiredMixin, generic.DetailView):
+    model = CareerDiary
     template_name = 'diary_detail.html'
     
     
 #日記作成機能
 class DiaryCreateView(LoginRequiredMixin, generic.CreateView):
-    model = Diary
+    model = CareerDiary
     template_name = 'diary_create.html'
     form_class = DiaryCreateForm
     #正常に処理が終わった時の遷移先
@@ -99,7 +99,7 @@ class DiaryCreateView(LoginRequiredMixin, generic.CreateView):
 
 #日記編集機能
 class DiaryUpdateView(LoginRequiredMixin, generic.UpdateView):
-    model = Diary
+    model = CareerDiary
     template_name = 'diary_update.html'
     #フォームフィールドはCreateフォームと変わらないため使いまわす
     form_class = DiaryCreateForm
@@ -121,7 +121,7 @@ class DiaryUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 #日記削除機能
 class DiaryDeleteView(LoginRequiredMixin, generic.DeleteView):
-    model = Diary
+    model = CareerDiary
     template_name = 'diary_delete.html'
     #削除を正常に行えたら日記一覧ページへと遷移する
     success_url = reverse_lazy('diary:diary_list')

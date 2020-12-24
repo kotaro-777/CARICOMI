@@ -23,7 +23,53 @@ class Diary(models.Model):
     class Meta:
         #verbose_nameの場合 => 語尾に[s]がついてしまうので[plural]で複数形にする
         verbose_name_plural = 'Diary'
-        
+    
+    #admin上でのデータの表示
     def __str__(self):
         return self.title
+
+#就職日記モデル
+class CareerDiary(models.Model):
+    user = models.ForeignKey(CustomUser, verbose_name="ユーザー", on_delete=models.PROTECT)
+    company_name = models.CharField(verbose_name="企業名", max_length=25)
+    interview_date = models.DateField(verbose_name="面接日")
     
+    SELECTION_STAGE_CHOICES = [
+        ('CASUAL', 'カジュアル面談'),
+        ('1', '1次面接'),
+        ('2', '2次面接'),
+        ('3', '3次面接'),
+        ('4', '4次面接'),
+        ('5', '5次面接'),
+        ('6', '最終選考')
+    ]
+    selection_stage = models.CharField(verbose_name="選考段階", choices=SELECTION_STAGE_CHOICES, max_length=7, blank=False, default=0)
+    content = models.TextField(verbose_name="面接記録")
+    created_at = models.DateTimeField(verbose_name="作成日時", auto_now_add=True)
+    update_at = models.DateTimeField(verbose_name="更新日時", auto_now=True)
+    
+    class Meta:
+        verbose_name_plural = 'CareerDiary'
+        
+    def __str__(self):
+        return self.company_name
+        
+#口コミモデル
+class WordOfMouth(models.Model):
+    user = models.ForeignKey(CustomUser, verbose_name="ユーザー", on_delete=models.PROTECT)
+    service_name = models.CharField(verbose_name="サービス名", max_length=20)
+    SERVICE_QUALITY_CHOICES = [
+        ('5', '★★★★★'),
+        ('4', '★★★★'),
+        ('3', '★★★'),
+        ('2', '★★'),
+        ('1', '★')
+    ]
+    support_quality = models.CharField(verbose_name="サポートの質", choices=SERVICE_QUALITY_CHOICES, max_length=5)
+    subject = models.TextField(verbose_name="サービスの感想")
+
+    class Meta:
+        verbose_name_plural = 'WordOfMouth'
+    
+    def __str__(self):
+        return self.service_name
