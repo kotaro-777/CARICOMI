@@ -9,7 +9,6 @@ urlpatterns = [
     path('dairy-list/', views.DiaryListView.as_view(), name='diary_list'),
     path('diary-detail/<int:pk>/', views.CareerDiaryDetail.as_view(), name='diary_detail'),
     path('diary-create/', views.CareerDiaryCreate.as_view(), name='diary_create'),
-    path('diary-update/<int:pk>/', views.DiaryUpdateView.as_view(), name="diary_update"),
-    path('diary-delete/<int:pk>', views.DiaryDeleteView.as_view(), name="diary_delete"),
-    path('diary-public', views.PublicDiaryList.as_view(), name="diary_public")
+    path('diary-update/<int:pk>/', views.CareerDiaryUpdate.as_view(), name="diary_update"),
+    path('diary-delete/<int:pk>', views.CareerDiaryDelete.as_view(), name="diary_delete"),
 ]

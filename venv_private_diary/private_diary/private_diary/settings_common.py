@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'diary.apps.DiaryConfig',
     'accounts.apps.AccountsConfig',
-    'reviews.apps.Reviews.Config',
+    'reviews.apps.ReviewsConfig',
     
     #django-auth用の設定
     'django.contrib.sites',
