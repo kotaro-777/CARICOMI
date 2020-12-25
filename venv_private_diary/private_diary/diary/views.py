@@ -1,7 +1,7 @@
 #viewsのgeneric（汎用ビューが沢山あるモジュール）
 from django.views import generic
 #forms.pyから使用するフォームクラスをインポート
-from .forms import InquiryForm, DiaryCreateForm
+from .forms import InquiryForm, DiaryCreateForm, CareerDiaryForm
 #URLの逆引きを行えて、URLのハードコーディングを防げる
 from django.urls import reverse_lazy
 #送信が成功した際にメッセージを表示するメソッド
@@ -10,8 +10,8 @@ from django.contrib import messages
 import logging
 #ログインしていないとアクセスできない状態にするもの
 from django.contrib.auth.mixins import LoginRequiredMixin
-#models.pyのDiaryモデルをインポート
-from .models import CustomUser, CareerDiary, WordOfMouth
+#models.pyのCareerDiaryモデルをインポート
+from .models import CustomUser, CareerDiary
 
 
 from . import views
@@ -73,14 +73,14 @@ class CareerDiaryDetail(LoginRequiredMixin, generic.DetailView):
     template_name = 'diary_detail.html'
     
     
-#日記作成機能
-class DiaryCreateView(LoginRequiredMixin, generic.CreateView):
+#CareerDiary作成機能
+class CareerDiaryCreate(LoginRequiredMixin, generic.CreateView):
     model = CareerDiary
     template_name = 'diary_create.html'
-    form_class = DiaryCreateForm
+    form_class = CareerDiaryForm
     #正常に処理が終わった時の遷移先
     success_url = reverse_lazy('diary:diary_list')
-    
+
     #フォームのバリデーションに以上がなかった時の処理
     def form_valid(self, form):
         #commit=falseを指定するとデータにまだ保存されていない状態のオブジェクトが返される
@@ -102,7 +102,7 @@ class DiaryUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = CareerDiary
     template_name = 'diary_update.html'
     #フォームフィールドはCreateフォームと変わらないため使いまわす
-    form_class = DiaryCreateForm
+    form_class = CareerDiaryForm
     
     
     def get_success_url(self):

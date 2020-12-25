@@ -36,12 +36,12 @@ class CareerDiary(models.Model):
     
     SELECTION_STAGE_CHOICES = [
         ('CASUAL', 'カジュアル面談'),
-        ('1', '1次面接'),
-        ('2', '2次面接'),
-        ('3', '3次面接'),
-        ('4', '4次面接'),
-        ('5', '5次面接'),
-        ('6', '最終選考')
+        ('1次面接', '1次面接'),
+        ('2次面接', '2次面接'),
+        ('3次面接', '3次面接'),
+        ('4次面接', '4次面接'),
+        ('5次面接', '5次面接'),
+        ('最終選考', '最終選考')
     ]
     selection_stage = models.CharField(verbose_name="選考段階", choices=SELECTION_STAGE_CHOICES, max_length=7, blank=False, default=0)
     content = models.TextField(verbose_name="面接記録")
@@ -53,23 +53,3 @@ class CareerDiary(models.Model):
         
     def __str__(self):
         return self.company_name
-        
-#口コミモデル
-class WordOfMouth(models.Model):
-    user = models.ForeignKey(CustomUser, verbose_name="ユーザー", on_delete=models.PROTECT)
-    service_name = models.CharField(verbose_name="サービス名", max_length=20)
-    SERVICE_QUALITY_CHOICES = [
-        ('5', '★★★★★'),
-        ('4', '★★★★'),
-        ('3', '★★★'),
-        ('2', '★★'),
-        ('1', '★')
-    ]
-    support_quality = models.CharField(verbose_name="サポートの質", choices=SERVICE_QUALITY_CHOICES, max_length=5)
-    subject = models.TextField(verbose_name="サービスの感想")
-
-    class Meta:
-        verbose_name_plural = 'WordOfMouth'
-    
-    def __str__(self):
-        return self.service_name

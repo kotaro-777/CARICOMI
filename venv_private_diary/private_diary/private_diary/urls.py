@@ -27,6 +27,7 @@ urlpatterns = [
     path('', include('diary.urls')),
     #all-authのurlsを指定することでDefaultでallauthが搭載しているurls.pyを参照する
     path('accounts/', include('allauth.urls')),
+    path('reviews/', include('reviews.urls')),
 ]
 
 #開発サーバーでメディアを配信できるようにする設定
