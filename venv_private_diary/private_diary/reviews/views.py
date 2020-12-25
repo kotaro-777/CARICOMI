@@ -30,7 +30,7 @@ class ReviewsList(LoginRequiredMixin, generic.ListView):
     
     #投稿された日記を作られた順に並べて表示するメソッド
     def get_queryset(self):
-        reviews= Reviews.objects.filter(user=self.request.user).order_by('-created_at')
+        reviews= Reviews.objects.all().order_by('-created_at')
         #ページネイションを指定 クラスベースView使ったらヤバいほど簡単
         return reviews
 
@@ -69,14 +69,14 @@ class ReviewsCreate(LoginRequiredMixin, generic.CreateView):
 #レビュー編集機能
 class ReviewsUpdate(LoginRequiredMixin, generic.UpdateView):
     model = Reviews
-    template_name = 'diary_update.html'
+    template_name = 'review_update.html'
     #フォームフィールドはCreateフォームと変わらないため使いまわす
     form_class = ReviewsCreateForm
     
     
     def get_success_url(self):
         """逆引きメソッド"""
-        return reverse_lazy('reviews:reviews_detail', kwargs={'pk':self.kwargs['pk']})
+        return reverse_lazy('reviews:review_detail', kwargs={'pk':self.kwargs['pk']})
     
     def form_valid(self, form):
         """正常にフォームが入力された時に実行されるメソッド"""
@@ -89,7 +89,7 @@ class ReviewsUpdate(LoginRequiredMixin, generic.UpdateView):
         return super().form_invalid(form)
 
 #レビュー削除機能
-class ReviewsDeleteView(LoginRequiredMixin, generic.DeleteView):
+class ReviewsDelete(LoginRequiredMixin, generic.DeleteView):
     model = Reviews
     template_name = 'review_delete.html'
     #削除を正常に行えたら日記一覧ページへと遷移する

@@ -33,7 +33,7 @@
   <div id="wrapper">
   <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="{% url 'diary:index' %}">Caricomi</a>
+      <a class="navbar-brand" href="{% url 'diary:index' %}">CARICOMI</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -42,8 +42,8 @@
           <li class="nav-item {% block active_inquiry %}{% endblock %}"><a class="nav-link" href="{% url 'diary:inquiry' %}">INQUIRY</a></li>
           
           {% if user.is_authenticated %}
-          <li class="nav-item {% block active_public_diary_list %}{% endblock %}"><a class="nav-link" href="{% url 'diary:diary_public' %}">Public Diary</a></li>
-            <li class="nav-item {% block active_diary_list %}{% endblock %}"><a class="nav-link" href="{% url 'diary:diary_list' %}">Private Diary</a></li>
+          <li class="nav-item {% block active_public_diary_list %}{% endblock %}"><a class="nav-link" href="{% url 'reviews:review_list' %}">Review</a></li>
+            <li class="nav-item {% block active_diary_list %}{% endblock %}"><a class="nav-link" href="{% url 'diary:diary_list' %}">Career Diary</a></li>
           {% endif %}
           
         </ul>
@@ -88,7 +88,7 @@
   <!-- Footer -->
   <footer class="py-5 bg-black">
     <div class="container">
-      <p class="m-0 text-center text-white small">Copyright &copy; Career Compa 2020</p>
+      <p class="m-0 text-center text-white small">Copyright &copy; CARICOMI 2020</p>
     </div>
     <!-- /.container -->
   </footer>

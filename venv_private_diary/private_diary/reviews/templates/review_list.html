@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}日記一覧（Public） | PrivateDiary{% endblock %}
+{% block title %}口コミ一覧 | CARICOMI{% endblock %}
 
 {% block active_public_diary_list %}active{% endblock %}
 
@@ -15,15 +15,15 @@
         <div class="my-div-style w-100">
             <div class="col-lg-8 col-md-10 mx-10 mx-auto">
                 <div class="clearfix">
-                    
+                    <a href="{% url 'reviews:review_create' %}" class="btn btn-primary float-right">新規作成</a>
                 </div>
-                {% for WOM in wordofmouth_list %}
+                {% for reviews in reviews_list %}
                     <div class="post-preview">
-                        <a href="{% url 'diary:diary_detail' WOM.pk %}">
-                            <h2 class="post-title">{{ WOM.service_name }}</h2>
-                            <h3 class="post-subtitle">{{ WOM.subject | truncatechars:20 }}</h3>
+                        <a href="{% url 'reviews:review_detail' reviews.pk %}">
+                            <h2 class="post-title">{{ reviews.service_name }}</h2>
+                            <h3 class="post-subtitle">{{ reviews.subject | truncatechars:20 }}</h3>
                         </a>
-                        <p class="post-meta">{{ WOM.created_at }}</p>
+                        <p class="post-meta">{{ reviews.created_at }}</p>
                     </div>
                     <hr>
                 {% empty %}

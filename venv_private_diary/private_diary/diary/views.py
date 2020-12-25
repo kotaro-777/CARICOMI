@@ -1,7 +1,7 @@
 #viewsのgeneric（汎用ビューが沢山あるモジュール）
 from django.views import generic
 #forms.pyから使用するフォームクラスをインポート
-from .forms import InquiryForm, DiaryCreateForm, CareerDiaryForm
+from .forms import InquiryForm, CareerDiaryCreateForm
 #URLの逆引きを行えて、URLのハードコーディングを防げる
 from django.urls import reverse_lazy
 #送信が成功した際にメッセージを表示するメソッド
@@ -55,17 +55,7 @@ class DiaryListView(LoginRequiredMixin, generic.ListView):
         #ページネイションを指定 クラスベースView使ったらヤバいほど簡単
         return diaries
 
-#みんなの日記が見れる機能
-class PublicDiaryList(LoginRequiredMixin, generic.ListView):
-    model = WordOfMouth
-    template_name = 'public_diary_list.html'
-    pagenate_by = 2
-    
-    
-    #投稿された日記を作られた順に並べて表示するメソッド(全員分)
-    def get_queryset(self):
-        diaries = WordOfMouth.objects.all().order_by('-created_at')
-        return diaries
+
 
 #日記の詳細表示
 class CareerDiaryDetail(LoginRequiredMixin, generic.DetailView):
@@ -77,7 +67,7 @@ class CareerDiaryDetail(LoginRequiredMixin, generic.DetailView):
 class CareerDiaryCreate(LoginRequiredMixin, generic.CreateView):
     model = CareerDiary
     template_name = 'diary_create.html'
-    form_class = CareerDiaryForm
+    form_class = CareerDiaryCreateForm
     #正常に処理が終わった時の遷移先
     success_url = reverse_lazy('diary:diary_list')
 
@@ -98,11 +88,11 @@ class CareerDiaryCreate(LoginRequiredMixin, generic.CreateView):
 
 
 #日記編集機能
-class DiaryUpdateView(LoginRequiredMixin, generic.UpdateView):
+class CareerDiaryUpdate(LoginRequiredMixin, generic.UpdateView):
     model = CareerDiary
     template_name = 'diary_update.html'
     #フォームフィールドはCreateフォームと変わらないため使いまわす
-    form_class = CareerDiaryForm
+    form_class = CareerDiaryCreateForm
     
     
     def get_success_url(self):
@@ -120,7 +110,7 @@ class DiaryUpdateView(LoginRequiredMixin, generic.UpdateView):
         return super().form_invalid(form)
 
 #日記削除機能
-class DiaryDeleteView(LoginRequiredMixin, generic.DeleteView):
+class CareerDiaryDelete(LoginRequiredMixin, generic.DeleteView):
     model = CareerDiary
     template_name = 'diary_delete.html'
     #削除を正常に行えたら日記一覧ページへと遷移する

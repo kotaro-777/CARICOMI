@@ -1,54 +1,43 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}日記詳細 | PrivateDiary{% endblock %}
+{% block title %}口コミ詳細 | CARICOMI{% endblock %}
 
 {% block active_diary_list %}active{% endblock %}
 
 {% block contents %}
 <div class="container">
     <div class="my-div-style w-100">
-        <!--タイトルを表示-->
+        <!--サービス名-->
         <div class="row">
             <div class="col-3">
-                <strong>タイトル</strong>
+                <strong>サービス名</strong>
             </div>
             <div class="col-9">
-                {{ object.company_name }}
+                {{ object.service_name }}
             </div>
         </div>
         <hr>
-        <!--面談日時-->
+        <!--サポートの質-->
         <div class="row">
             <div class="col-3">
-                <strong>面談日時</strong>
+                <strong>サポートの質</strong>
             </div>
             <div class="col-9">
-                {{ object.interview_date }}
+                {{ object.support_quality }}
             </div>
         </div>
         <hr>
-        <!--選考段階-->
+        <!--サービスの感想-->
         <div class="row">
             <div class="col-3">
-                <strong>選考段階</strong>
+                <strong>サービスの感想</strong>
             </div>
             <div class="col-9">
-                {{ object.selection_stage }}
+                {{ object.subject }}
             </div>
         </div>
         <hr>
-        <!--本文-->
-        <div class="row">
-            <div class="col-3">
-                <strong>感想</strong>
-            </div>
-            <div class="col-9">
-                {{ object.content }}
-            </div>
-        </div>
-        <hr>
-
         <!--作成日時を表示-->
         <div class="row">
             <div class="col-3">
@@ -70,8 +59,8 @@
             </div>
         </div>
         {% if object.user == user %}
-            <a class="btn btn-success mt-5 mb-3" href="{% url 'diary:diary_update' object.pk %}">編集</a>
-            <a class="btn btn-danger mt-5 ml-2 mb-3" href="{% url 'diary:diary_delete' object.pk %}">削除</a>
+            <a class="btn btn-success mt-5 mb-3" href="{% url 'reviews:review_update' object.pk %}">編集</a>
+            <a class="btn btn-danger mt-5 ml-2 mb-3" href="{% url 'reviews:review_delete' object.pk %}">削除</a>
         {% endif %}
     </div>
 </div>
