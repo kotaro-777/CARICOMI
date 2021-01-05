@@ -3,7 +3,8 @@
 
 {% block title %}口コミ詳細 | CARICOMI{% endblock %}
 
-{% block active_diary_list %}active{% endblock %}
+{% block active_review_list %}active{% endblock %}
+
 
 {% block contents %}
 <div class="container">
@@ -24,7 +25,7 @@
                 <strong>サポートの質</strong>
             </div>
             <div class="col-9">
-                {{ object.support_quality }}
+                {{ object.get_support_quality_display }}
             </div>
         </div>
         <hr>

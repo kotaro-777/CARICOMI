@@ -20,16 +20,16 @@ class InquiryForm(forms.Form):
         '''
         
         self.fields['name'].widget.attrs['class'] = 'form-control col-9'
-        self.fields['name'].widget.attrs['placeholder'] = 'お名前をここに入力してください'
+        self.fields['name'].widget.attrs['placeholder'] = 'お名前を入力してください'
         
         self.fields['email'].widget.attrs['class'] = 'form-control col-11'
-        self.fields['email'].widget.attrs['placeholder'] = 'メールアドレスをここに入力してください'
+        self.fields['email'].widget.attrs['placeholder'] = 'メールアドレスを入力してください'
         
         self.fields['title'].widget.attrs['class'] = 'form-control col-11'
-        self.fields['title'].widget.attrs['placeholder'] = 'タイトルをここに入力してください'
+        self.fields['title'].widget.attrs['placeholder'] = 'タイトルを入力してください'
         
         self.fields['message'].widget.attrs['class'] = 'form-control col-12'
-        self.fields['message'].widget.attrs['placeholder'] = 'タイトルをここに入力してください'
+        self.fields['message'].widget.attrs['placeholder'] = 'タイトルを入力してください'
     
     #メールを送るメソッド
     def send_email(self):

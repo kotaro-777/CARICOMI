@@ -3,7 +3,7 @@
 
 {% block title %}口コミ一覧 | CARICOMI{% endblock %}
 
-{% block active_public_diary_list %}active{% endblock %}
+{% block active_review_list %}active{% endblock %}
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/clean-blog.min.css' %}">
@@ -16,12 +16,24 @@
             <div class="col-lg-8 col-md-10 mx-10 mx-auto">
                 <div class="clearfix">
                     <a href="{% url 'reviews:review_create' %}" class="btn btn-primary float-right">新規作成</a>
+                    <form method="post">
+                        {% csrf_token %}
+                        {% for field in search_form %}
+                        <div class="form-group form_inline">
+                            <div class="col-md-8">
+                                {{ field }}
+                        {% endfor %}
+                            <input type="submit"  id="button" name="button" value="🔍">
+                            </div>
+                        
+                        </div>
+                    </form>
                 </div>
-                {% for reviews in reviews_list %}
+                {% for reviews in object_list %}
                     <div class="post-preview">
                         <a href="{% url 'reviews:review_detail' reviews.pk %}">
                             <h2 class="post-title">{{ reviews.service_name }}</h2>
-                            <h3 class="post-subtitle">{{ reviews.subject | truncatechars:20 }}</h3>
+                            <h3 class="post-subtitle">{{ reviews.get_support_quality_display }}</h3>
                         </a>
                         <p class="post-meta">{{ reviews.created_at }}</p>
                     </div>

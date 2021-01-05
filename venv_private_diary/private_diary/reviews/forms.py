@@ -5,7 +5,7 @@ from .models import Reviews
 
 
 
-#WordOfMouth作成フォーム
+#Review作成フォーム
 class ReviewsCreateForm(forms.ModelForm):
     class Meta:
         model = Reviews
@@ -18,3 +18,10 @@ class ReviewsCreateForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
+
+class SearchForm(forms.Form):
+    service_name = forms.CharField(initial="",
+                                    required=False, 
+                                    label="サービス名",
+                                    widget=forms.TextInput(attrs={"placeholder":"サービス名を検索"})
+    )

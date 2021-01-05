@@ -1,7 +1,7 @@
 #viewsのgeneric（汎用ビューが沢山あるモジュール）
 from django.views import generic
 #forms.pyから使用するフォームクラスをインポート
-from .forms import ReviewsCreateForm
+from .forms import ReviewsCreateForm, SearchForm
 #URLの逆引きを行えて、URLのハードコーディングを防げる
 from django.urls import reverse_lazy
 #送信が成功した際にメッセージを表示するメソッド
@@ -13,6 +13,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 #models.pyのReviewsモデルをインポート
 from .models import CustomUser, Reviews
 
+from django.db.models import Q
 
 from . import views
 
@@ -26,13 +27,58 @@ logger = logging.getLogger(__name__)
 class ReviewsList(LoginRequiredMixin, generic.ListView):
     model = Reviews
     template_name = 'review_list.html'
-    paginate_by = 2
+    paginate_by = 5
+    
+    #post通信時に行う処理
+    def post(self, request, *args, **kwargs):
+        #ページが変わってもフォームに値が残るようにする
+        form_value = self.request.POST.get('service_name', None)
+        request.session['form_value'] = form_value
+        
+        #検索時にページネーションに関連したエラーを防ぐ　※後で使わないとどうなるか試す
+        self.request.GET = self.request.GET.copy()
+        self.request.GET.clear()
+        
+        return self.get(request, *args, **kwargs)
+    
+    #ListViewが返すtemplateなどの表示するobject
+    def get_context_data(self, **kwargs):
+        #オーバーライドする
+        context = super().get_context_data(**kwargs)
+        
+        #sessionに値がある場合、その値をセットする(ページングしても値が変わらないように)
+        service_name = ''
+        #ある場合
+        if 'form_value' in self.request.session:
+            form_value = self.request.session['form_value']
+            service_name = form_value
+        default_data = {'service_name':service_name}
+        
+        search_form =SearchForm(initial=default_data)#検索フォーム
+        #テンプレートで使えるようにする
+        context['search_form'] = search_form
+        
+        return context
+    
+    
     
     #投稿された日記を作られた順に並べて表示するメソッド
     def get_queryset(self):
-        reviews= Reviews.objects.all().order_by('-created_at')
-        #ページネイションを指定 クラスベースView使ったらヤバいほど簡単
-        return reviews
+        #sessionnnに値がある場合、その値でクエリを発行する
+        if 'form_value' in self.request.session:
+            form_value = self.request.session['form_value']
+            service_name = form_value
+            
+            #検索条件
+            condition_service_name = Q()
+            
+            if len(service_name != 0 and service_name):
+                condition_service_name = Q(service_name__icontains=service_name)
+                
+            return Reviews.objects.select_related().filter(condition_service_name)
+
+        else:
+            return Reviews.objects.none()
 
 
 

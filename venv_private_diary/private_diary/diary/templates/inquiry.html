@@ -7,29 +7,27 @@
 {% block contents %}
 
 <div class="container">
-    <div class="row">
-        <div class="my-div-style">
-            <form method= 'post'>
+    <div class="row justify-content-center ">
+        <div class="my-div-style ">
+            <form class=""  method= 'post'>
                 <!--CSRF対策用タグ　※post通信でこのタグをつけていないとDjangoは403エラーを返す-->
                 {% csrf_token %}
-
                 {{form.non_field_errors}}
-
-                {% for field in form %}
-                <div class="form-group row">
-                    <label for="{{field.id_for_label}}" class="col-sm-4 col-form-label">
-                        <strong>{{field.label_tag}}</strong>
-                    </label>
-                    <div class="col-sm-8">
-                        {{field}}
-                        {{field.errors}}
-                    </div>
-                </div>
-                {% endfor %}
-                <div class="offset-sm-4 col-sm-8">
-                    <button class="btn btn-primary" type="submit">送信</button>
+                <table class="table  table-active text-center">
+                    <tbody class="">
+                        {% for field in form %}
+                            <tr class="mb-3 ">
+                                <th class="t">{{field.label}}</th>
+                                <td>{{field}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="offset-sm-4 col-sm-7 mt-4 mb-4">
+                    <button class="btn btn-info" type="submit">送信</button>
                 </div>
             </form>
+            
         </div>
     </div>
 </div>
