@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import Diary, CareerDiary
+from .models import CareerDiary
 
 
 # Register your models h
-admin.site.register(Diary)
 admin.site.register(CareerDiary)

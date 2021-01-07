@@ -39,7 +39,17 @@
             </div>
         </div>
         <hr>
-        <!--作成日時を表示-->
+        <!--投稿者-->
+        <div class="row">
+            <div class="col-3">
+                <strong>投稿者</strong>
+            </div>
+            <div class="col-9">
+                {{ object.user }}
+            </div>
+        </div>
+        <hr>
+        <!--作成日時-->
         <div class="row">
             <div class="col-3">
                 <strong>作成日時</strong>
@@ -49,14 +59,13 @@
             </div>
         </div>
         <hr>
-
         <!--更新日時-->
         <div class="row">
             <div class="col-3">
                 <strong>更新日時</strong>
             </div>
             <div class="col-9">
-                {{ object.updated_at }}
+                {{ object.update_at }}
             </div>
         </div>
         {% if object.user == user %}
