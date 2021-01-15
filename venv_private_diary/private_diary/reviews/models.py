@@ -5,6 +5,9 @@ from accounts.models import CustomUser
 
 # Create your models here.
 
+#Service
+
+
 #口コミモデル
 class Reviews(models.Model):
     user = models.ForeignKey(CustomUser, verbose_name="ユーザー", on_delete=models.PROTECT)

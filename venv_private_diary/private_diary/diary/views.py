@@ -24,11 +24,11 @@ logger = logging.getLogger(__name__)
 
 # Create your views here.
 class IndexView(generic.TemplateView):
-    template_name = 'index.html'
+    template_name = 'diary/index.html'
     
 class InquiryView(generic.FormView):
     #テンプレートとして使用するhtmlファイルを指定
-    template_name = 'inquiry.html'
+    template_name = 'diary/inquiry.html'
     #使用するフォームクラスを指定
     form_class = InquiryForm
     success_url = reverse_lazy('diary:inquiry')
@@ -46,7 +46,7 @@ class InquiryView(generic.FormView):
 #日記一覧表示機能
 class DiaryListView(LoginRequiredMixin, generic.ListView):
     model = CareerDiary
-    template_name = 'diary_list.html'
+    template_name = 'diary/diary_list.html'
     paginate_by = 2
     
     #投稿された日記を作られた順に並べて表示するメソッド
@@ -60,13 +60,13 @@ class DiaryListView(LoginRequiredMixin, generic.ListView):
 #日記の詳細表示
 class CareerDiaryDetail(LoginRequiredMixin, generic.DetailView):
     model = CareerDiary
-    template_name = 'diary_detail.html'
+    template_name = 'diary/diary_detail.html'
     
     
 #CareerDiary作成機能
 class CareerDiaryCreate(LoginRequiredMixin, generic.CreateView):
     model = CareerDiary
-    template_name = 'diary_create.html'
+    template_name = 'diary/diary_create.html'
     form_class = CareerDiaryCreateForm
     #正常に処理が終わった時の遷移先
     success_url = reverse_lazy('diary:diary_list')
@@ -90,7 +90,7 @@ class CareerDiaryCreate(LoginRequiredMixin, generic.CreateView):
 #日記編集機能
 class CareerDiaryUpdate(LoginRequiredMixin, generic.UpdateView):
     model = CareerDiary
-    template_name = 'diary_update.html'
+    template_name = 'diary/diary_update.html'
     #フォームフィールドはCreateフォームと変わらないため使いまわす
     form_class = CareerDiaryCreateForm
     
@@ -112,7 +112,7 @@ class CareerDiaryUpdate(LoginRequiredMixin, generic.UpdateView):
 #日記削除機能
 class CareerDiaryDelete(LoginRequiredMixin, generic.DeleteView):
     model = CareerDiary
-    template_name = 'diary_delete.html'
+    template_name = 'diary/diary_delete.html'
     #削除を正常に行えたら日記一覧ページへと遷移する
     success_url = reverse_lazy('diary:diary_list')
     

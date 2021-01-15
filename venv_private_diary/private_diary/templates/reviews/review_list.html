@@ -25,11 +25,10 @@
                         {% endfor %}
                             <input type="submit"  id="button" name="button" value="🔍">
                             </div>
-                        
                         </div>
                     </form>
                 </div>
-                {% for reviews in object_list %}
+                {% for reviews in reviews_list %}
                     <div class="post-preview">
                         <a href="{% url 'reviews:review_detail' reviews.pk %}">
                             <h2 class="post-title">{{ reviews.service_name }}</h2>
@@ -57,7 +56,7 @@
                         {% if page_obj.number == page_num %}
                             <li class="page-item active"><a class="page-link" href="#">{{ page_num }}</a></li>
                         {% else %}
-                            <li class="page-item"><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+                            <li class="page-item"><a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a></li>
                         {% endif %}
                     {% endfor %}
 

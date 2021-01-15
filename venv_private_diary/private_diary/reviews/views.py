@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 #日記一覧表示機能
 class ReviewsList(LoginRequiredMixin, generic.ListView):
     model = Reviews
-    template_name = 'review_list.html'
+    template_name = 'reviews/review_list.html'
     paginate_by = 5
     
     #post通信時に行う処理
@@ -85,13 +85,13 @@ class ReviewsList(LoginRequiredMixin, generic.ListView):
 #レビューの詳細表示
 class ReviewsDetail(LoginRequiredMixin, generic.DetailView):
     model = Reviews
-    template_name = 'review_detail.html'
+    template_name = 'reviews/review_detail.html'
     
     
 #レビュー作成機能
 class ReviewsCreate(LoginRequiredMixin, generic.CreateView):
     model = Reviews
-    template_name = 'review_create.html'
+    template_name = 'reviews/review_create.html'
     form_class = ReviewsCreateForm
     #正常に処理が終わった時の遷移先
     success_url = reverse_lazy('reviews:review_list')
@@ -115,7 +115,7 @@ class ReviewsCreate(LoginRequiredMixin, generic.CreateView):
 #レビュー編集機能
 class ReviewsUpdate(LoginRequiredMixin, generic.UpdateView):
     model = Reviews
-    template_name = 'review_update.html'
+    template_name = 'reviews/review_update.html'
     #フォームフィールドはCreateフォームと変わらないため使いまわす
     form_class = ReviewsCreateForm
     
@@ -137,9 +137,9 @@ class ReviewsUpdate(LoginRequiredMixin, generic.UpdateView):
 #レビュー削除機能
 class ReviewsDelete(LoginRequiredMixin, generic.DeleteView):
     model = Reviews
-    template_name = 'review_delete.html'
+    template_name = 'reviews/review_delete.html'
     #削除を正常に行えたら日記一覧ページへと遷移する
-    success_url = reverse_lazy('reviews:reviews_list')
+    success_url = reverse_lazy('reviews:review_list')
     
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, '日記を削除しました。')
