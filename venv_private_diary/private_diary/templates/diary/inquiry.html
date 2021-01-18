@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}お問い合わせ | Private {% endblock %}
 
 {% block active_inquiry %}active{% endblock %}
 
-{% block contents %}
 
-<div class="container">
+{% block head %}<link rel="stylesheet" href="{% static 'css/clean-blog.min.css' %}">{% endblock %}
+
+{% block contents %}
+<div class="container mt-3">
     <div class="row justify-content-center ">
         <div class="my-div-style ">
             <form class=""  method= 'post'>
