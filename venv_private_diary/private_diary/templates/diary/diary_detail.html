@@ -1,55 +1,59 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}口コミ詳細 | CARICOMI{% endblock %}
+{% block title %}日記詳細 | PrivateDiary{% endblock %}
 
-{% block active_review_list %}active{% endblock %}
+{% block active_diary_list %}active{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/clean-blog.min.css' %}">
+{% endblock %}
 
 {% block contents %}
-<div class="container">
+<div class="container mt-3">
     <div class="my-div-style w-100">
-        <!--サービス名-->
+        <!--タイトルを表示-->
         <div class="row">
             <div class="col-3">
-                <strong>サービス名</strong>
+                <strong>タイトル</strong>
             </div>
             <div class="col-9">
-                {{ object.service_name }}
+                {{ object.company_name }}
             </div>
         </div>
         <hr>
-        <!--サポートの質-->
+        <!--面談日時-->
         <div class="row">
             <div class="col-3">
-                <strong>サポートの質</strong>
+                <strong>面談日時</strong>
             </div>
             <div class="col-9">
-                {{ object.get_support_quality_display }}
+                {{ object.interview_date }}
             </div>
         </div>
         <hr>
-        <!--サービスの感想-->
+        <!--選考段階-->
         <div class="row">
             <div class="col-3">
-                <strong>サービスの感想</strong>
+                <strong>選考段階</strong>
             </div>
             <div class="col-9">
-                {{ object.subject }}
+                {{ object.selection_stage }}
             </div>
         </div>
         <hr>
-        <!--投稿者-->
+        <!--本文-->
         <div class="row">
             <div class="col-3">
-                <strong>投稿者</strong>
+                <strong>感想</strong>
             </div>
             <div class="col-9">
-                {{ object.user }}
+                {{ object.content }}
             </div>
         </div>
         <hr>
-        <!--作成日時-->
+
+        <!--作成日時を表示-->
         <div class="row">
             <div class="col-3">
                 <strong>作成日時</strong>
@@ -59,18 +63,19 @@
             </div>
         </div>
         <hr>
+
         <!--更新日時-->
         <div class="row">
             <div class="col-3">
                 <strong>更新日時</strong>
             </div>
             <div class="col-9">
-                {{ object.update_at }}
+                {{ object.updated_at }}
             </div>
         </div>
         {% if object.user == user %}
-            <a class="btn btn-success mt-5 mb-3" href="{% url 'reviews:review_update' object.pk %}">編集</a>
-            <a class="btn btn-danger mt-5 ml-2 mb-3" href="{% url 'reviews:review_delete' object.pk %}">削除</a>
+            <a class="btn btn-success mt-5 mb-3" href="{% url 'diary:diary_update' object.pk %}">編集</a>
+            <a class="btn btn-danger mt-5 ml-2 mb-3" href="{% url 'diary:diary_delete' object.pk %}">削除</a>
         {% endif %}
     </div>
 </div>
