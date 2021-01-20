@@ -1,7 +1,7 @@
 #viewsのgeneric（汎用ビューが沢山あるモジュール）
 from django.views import generic
 #forms.pyから使用するフォームクラスをインポート
-from .forms import ReviewsCreateForm, SearchForm
+from .forms import ReviewCreateForm, SearchForm
 #URLの逆引きを行えて、URLのハードコーディングを防げる
 from django.urls import reverse_lazy
 #送信が成功した際にメッセージを表示するメソッド
@@ -11,7 +11,7 @@ import logging
 #ログインしていないとアクセスできない状態にするもの
 from django.contrib.auth.mixins import LoginRequiredMixin
 #models.pyのReviewsモデルをインポート
-from .models import CustomUser, Reviews
+from .models import CustomUser, Review, Service
 
 from django.db.models import Q
 
@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 #日記一覧表示機能
 class ReviewsList(LoginRequiredMixin, generic.ListView):
-    model = Reviews
+    model = Review
     template_name = 'reviews/review_list.html'
     paginate_by = 5
     
@@ -64,7 +64,7 @@ class ReviewsList(LoginRequiredMixin, generic.ListView):
     
     #投稿された日記を作られた順に並べて表示するメソッド
     def get_queryset(self):
-        #sessionnnに値がある場合、その値でクエリを発行する
+        #sessionに値がある場合、その値でクエリを発行する
         if 'form_value' in self.request.session:
             form_value = self.request.session['form_value']
             service_name = form_value
@@ -73,7 +73,7 @@ class ReviewsList(LoginRequiredMixin, generic.ListView):
             condition_service_name = Q()
             
             if len(service_name != 0 and service_name):
-                condition_service_name = Q(service_name__icontains=service_name)
+                condition_service_name = Q(service_name__icontains=service)
                 
             return Reviews.objects.select_related().filter(condition_service_name)
 
@@ -84,15 +84,15 @@ class ReviewsList(LoginRequiredMixin, generic.ListView):
 
 #レビューの詳細表示
 class ReviewsDetail(LoginRequiredMixin, generic.DetailView):
-    model = Reviews
+    model = Review
     template_name = 'reviews/review_detail.html'
     
     
 #レビュー作成機能
 class ReviewsCreate(LoginRequiredMixin, generic.CreateView):
-    model = Reviews
+    model = Review
     template_name = 'reviews/review_create.html'
-    form_class = ReviewsCreateForm
+    form_class = ReviewCreateForm
     #正常に処理が終わった時の遷移先
     success_url = reverse_lazy('reviews:review_list')
 
@@ -114,10 +114,10 @@ class ReviewsCreate(LoginRequiredMixin, generic.CreateView):
 
 #レビュー編集機能
 class ReviewsUpdate(LoginRequiredMixin, generic.UpdateView):
-    model = Reviews
+    model = Review
     template_name = 'reviews/review_update.html'
     #フォームフィールドはCreateフォームと変わらないため使いまわす
-    form_class = ReviewsCreateForm
+    form_class = ReviewCreateForm
     
     
     def get_success_url(self):
@@ -136,7 +136,7 @@ class ReviewsUpdate(LoginRequiredMixin, generic.UpdateView):
 
 #レビュー削除機能
 class ReviewsDelete(LoginRequiredMixin, generic.DeleteView):
-    model = Reviews
+    model = Review
     template_name = 'reviews/review_delete.html'
     #削除を正常に行えたら日記一覧ページへと遷移する
     success_url = reverse_lazy('reviews:review_list')
