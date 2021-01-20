@@ -1,18 +1,18 @@
 from django import forms
 
 #models.pyからDiaryモデルクラスをインポート
-from .models import Reviews
+from .models import Review
 
 
 
 #Review作成フォーム
-class ReviewsCreateForm(forms.ModelForm):
+class ReviewCreateForm(forms.ModelForm):
     class Meta:
-        model = Reviews
+        model = Review
         fields = [
-            'service_name',
-            'support_quality',
-            'subject',
+            'service',
+            'quality',
+            'content',
         ]
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
