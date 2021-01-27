@@ -75,10 +75,10 @@ class ReviewsList(LoginRequiredMixin, generic.ListView):
             if len(service_name != 0 and service_name):
                 condition_service_name = Q(service_name__icontains=service)
                 
-            return Reviews.objects.select_related().filter(condition_service_name)
+            return Review.objects.select_related().filter(condition_service_name)
 
         else:
-            return Reviews.objects.none()
+            return Review.objects.none()
 
 
 
